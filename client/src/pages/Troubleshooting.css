@@ -1,0 +1,896 @@
+/* =========================================================
+   REPAIRX - TROUBLESHOOTING PAGE
+   Designed specifically for the current Troubleshooting.jsx
+========================================================= */
+
+
+/* =========================================================
+   PAGE
+========================================================= */
+
+.troubleshooting-page {
+  min-height: 100vh;
+  background: #0b1220;
+  color: #ffffff;
+  overflow-x: hidden;
+}
+
+.troubleshooting-container {
+  width: min(1450px, 94%);
+  margin: 0 auto;
+  padding: 55px 0 80px;
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.troubleshooting-header {
+  text-align: center;
+  max-width: 900px;
+  margin: 0 auto 40px;
+}
+
+.troubleshooting-header .badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 8px 16px;
+
+  background: #172b52;
+  color: #75a5ff;
+
+  border: 1px solid #294477;
+  border-radius: 999px;
+
+  font-size: 13px;
+  font-weight: 700;
+
+  margin-bottom: 16px;
+}
+
+.troubleshooting-header h1 {
+  margin: 0;
+
+  color: #ffffff;
+
+  font-size: clamp(38px, 5vw, 62px);
+  line-height: 1.05;
+
+  font-weight: 850;
+  letter-spacing: -2px;
+}
+
+.troubleshooting-header p {
+  max-width: 750px;
+
+  margin: 18px auto 0;
+
+  color: #aebbd0;
+
+  font-size: 16px;
+  line-height: 1.65;
+}
+
+
+/* =========================================================
+   SEARCH + FILTER AREA
+========================================================= */
+
+.troubleshooting-filters {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 14px;
+
+  margin: 0 auto 45px;
+
+  flex-wrap: wrap;
+}
+
+
+/* SEARCH */
+
+.search-box {
+  width: min(430px, 100%);
+
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+
+  padding: 0 17px;
+
+  background: #111c31;
+
+  border: 1px solid #2a3b5b;
+  border-radius: 12px;
+
+  box-sizing: border-box;
+
+  transition: 0.2s ease;
+}
+
+.search-box:focus-within {
+  border-color: #3975ed;
+
+  box-shadow:
+    0 0 0 4px rgba(37, 99, 235, 0.12);
+}
+
+.search-box span {
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+.search-box input {
+  width: 100%;
+
+  padding: 15px 0;
+
+  border: none;
+  outline: none;
+
+  background: transparent;
+
+  color: #ffffff;
+
+  font-size: 14px;
+}
+
+.search-box input::placeholder {
+  color: #7f8da5;
+}
+
+
+/* CATEGORY BUTTONS */
+
+.category-buttons {
+  display: flex;
+
+  align-items: center;
+
+  gap: 8px;
+
+  flex-wrap: wrap;
+}
+
+.category-button {
+  padding: 11px 15px;
+
+  background: #111c31;
+
+  border: 1px solid #2a3b5b;
+
+  border-radius: 999px;
+
+  color: #aebbd0;
+
+  font-size: 12px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.category-button:hover {
+  background: #192847;
+
+  color: #ffffff;
+
+  border-color: #3975ed;
+
+  transform: translateY(-1px);
+}
+
+.category-button.active {
+  background: #2563eb;
+
+  border-color: #2563eb;
+
+  color: #ffffff;
+
+  box-shadow:
+    0 6px 16px rgba(37, 99, 235, 0.22);
+}
+
+
+/* =========================================================
+   NO RESULTS
+========================================================= */
+
+.no-results {
+  padding: 55px 25px;
+
+  background: #111c31;
+
+  border: 1px solid #273856;
+
+  border-radius: 18px;
+
+  text-align: center;
+}
+
+.no-results h2 {
+  margin: 0 0 10px;
+
+  color: #ffffff;
+}
+
+.no-results p {
+  margin: 0;
+
+  color: #9eacc2;
+}
+
+
+/* =========================================================
+   MAIN PROBLEM CARD
+========================================================= */
+
+.problem-card {
+  width: 100%;
+
+  box-sizing: border-box;
+
+  display: grid;
+
+  /*
+    12-column desktop layout
+
+    Header
+    ────────────────────────────────────────────
+
+    Causes | Diagnostic | Solution | Price
+
+    Parts | Technician Notes | Warnings
+
+    Customer Notice
+  */
+
+  grid-template-columns:
+    repeat(12, minmax(0, 1fr));
+
+  gap: 18px;
+
+  padding: 28px;
+
+  margin-bottom: 32px;
+
+  background: #111c31;
+
+  border: 1px solid #293b5b;
+
+  border-radius: 22px;
+
+  box-shadow:
+    0 18px 45px rgba(0, 0, 0, 0.18);
+}
+
+
+/* =========================================================
+   PROBLEM HEADER
+========================================================= */
+
+.problem-card-header {
+  grid-column: 1 / -1;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 20px;
+
+  padding-bottom: 22px;
+
+  border-bottom: 1px solid #263753;
+}
+
+.problem-card-header h2 {
+  margin: 0;
+
+  color: #ffffff;
+
+  font-size: 27px;
+  font-weight: 800;
+
+  line-height: 1.25;
+}
+
+.category-badge {
+  flex-shrink: 0;
+
+  padding: 8px 14px;
+
+  background: #172b52;
+
+  border: 1px solid #2c4778;
+
+  border-radius: 999px;
+
+  color: #72a2ff;
+
+  font-size: 12px;
+  font-weight: 750;
+}
+
+
+/* =========================================================
+   COMMON TROUBLESHOOTING SECTION
+========================================================= */
+
+.troubleshooting-section {
+  min-width: 0;
+
+  padding: 21px;
+
+  background: #151f35;
+
+  border: 1px solid #293b5a;
+
+  border-radius: 16px;
+
+  box-sizing: border-box;
+}
+
+.troubleshooting-section h3 {
+  margin: 0 0 18px;
+
+  color: #ffffff;
+
+  font-size: 17px;
+  font-weight: 800;
+
+  line-height: 1.35;
+}
+
+
+/* =========================================================
+   THREE MAIN COLUMNS
+========================================================= */
+
+/*
+   Possible Causes
+*/
+
+.troubleshooting-section:nth-of-type(1) {
+  grid-column: span 3;
+}
+
+
+/*
+   Diagnostic Steps
+*/
+
+.troubleshooting-section:nth-of-type(2) {
+  grid-column: span 3;
+}
+
+
+/*
+   Recommended Solution
+*/
+
+.troubleshooting-section:nth-of-type(3) {
+  grid-column: span 3;
+}
+
+
+/* =========================================================
+   POSSIBLE CAUSES
+========================================================= */
+
+.causes-grid {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 10px;
+}
+
+.cause-item {
+  padding: 13px 14px;
+
+  background: #1a2741;
+
+  border: 1px solid #2c3e5e;
+
+  border-radius: 11px;
+
+  color: #d9e2f0;
+
+  font-size: 13px;
+
+  line-height: 1.55;
+}
+
+.cause-item::before {
+  content: "⚠ ";
+
+  color: #fbbf24;
+}
+
+
+/* =========================================================
+   DIAGNOSTIC STEPS
+========================================================= */
+
+.steps-list {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 10px;
+}
+
+.step-item {
+  display: flex;
+
+  align-items: flex-start;
+
+  gap: 11px;
+
+  padding: 12px;
+
+  background: #1a2741;
+
+  border: 1px solid #2c3e5e;
+
+  border-radius: 11px;
+
+  color: #d8e1ef;
+
+  font-size: 13px;
+
+  line-height: 1.55;
+}
+
+.step-number {
+  width: 27px;
+  height: 27px;
+
+  flex-shrink: 0;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  background: #2563eb;
+
+  color: #ffffff;
+
+  border-radius: 50%;
+
+  font-size: 12px;
+  font-weight: 800;
+}
+
+
+/* =========================================================
+   RECOMMENDED SOLUTION
+========================================================= */
+
+.solution-list {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 10px;
+}
+
+.solution-item {
+  padding: 13px 14px;
+
+  background: #0e302d;
+
+  border-left: 4px solid #22c55e;
+
+  border-radius: 9px;
+
+  color: #dff8e9;
+
+  font-size: 13px;
+
+  line-height: 1.6;
+}
+
+
+/* =========================================================
+   PRICE CARD
+========================================================= */
+
+.price-card {
+  grid-column: span 3;
+
+  min-width: 0;
+
+  min-height: 100%;
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  padding: 25px;
+
+  box-sizing: border-box;
+
+  background:
+    linear-gradient(
+      145deg,
+      #1e3b91,
+      #183478
+    );
+
+  border: 1px solid #3b60b2;
+
+  border-radius: 16px;
+
+  text-align: center;
+}
+
+.price-card h3 {
+  margin: 0 0 15px;
+
+  color: #ffffff;
+
+  font-size: 16px;
+
+  line-height: 1.4;
+}
+
+.price-card p {
+  margin: 0;
+
+  color: #ffffff;
+
+  font-size: 20px;
+
+  font-weight: 800;
+
+  line-height: 1.4;
+}
+
+
+/* =========================================================
+   INFORMATION GRID
+========================================================= */
+
+.info-grid {
+  grid-column: span 6;
+
+  display: grid;
+
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  gap: 18px;
+
+  min-width: 0;
+}
+
+.info-card {
+  padding: 21px;
+
+  background: #151f35;
+
+  border: 1px solid #293b5a;
+
+  border-radius: 16px;
+
+  min-width: 0;
+}
+
+.info-card h3 {
+  margin: 0 0 17px;
+
+  color: #ffffff;
+
+  font-size: 16px;
+
+  line-height: 1.4;
+}
+
+.info-card ul {
+  margin: 0;
+
+  padding-left: 20px;
+}
+
+.info-card li {
+  margin-bottom: 10px;
+
+  color: #bdc9da;
+
+  font-size: 13px;
+
+  line-height: 1.55;
+}
+
+.info-card li:last-child {
+  margin-bottom: 0;
+}
+
+
+/* =========================================================
+   WARNING CARD
+========================================================= */
+
+.warning-card {
+  grid-column: span 6;
+
+  padding: 21px;
+
+  background: #2a2114;
+
+  border: 1px solid #574020;
+
+  border-radius: 16px;
+
+  min-width: 0;
+}
+
+.warning-card h3 {
+  margin: 0 0 16px;
+
+  color: #ffd477;
+
+  font-size: 16px;
+
+  line-height: 1.4;
+}
+
+.warning-card ul {
+  margin: 0;
+
+  padding-left: 20px;
+}
+
+.warning-card li {
+  margin-bottom: 9px;
+
+  color: #e5d5b5;
+
+  font-size: 13px;
+
+  line-height: 1.55;
+}
+
+
+/* =========================================================
+   CUSTOMER NOTICE
+========================================================= */
+
+.customer-notice {
+  grid-column: 1 / -1;
+
+  padding: 17px 22px;
+
+  background: #0c1628;
+
+  border: 1px solid #263754;
+
+  border-radius: 13px;
+
+  color: #93a4bd;
+
+  font-size: 12px;
+
+  line-height: 1.65;
+
+  text-align: center;
+}
+
+.customer-notice strong {
+  color: #dce6f5;
+}
+
+
+/* =========================================================
+   LOADING
+========================================================= */
+
+.loading-message {
+  min-height: 70vh;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  padding: 30px;
+
+  box-sizing: border-box;
+
+  background: #0b1220;
+
+  color: #b8c6da;
+
+  font-size: 17px;
+
+  text-align: center;
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 1200px) {
+
+  .problem-card {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+
+  .troubleshooting-section:nth-of-type(1),
+  .troubleshooting-section:nth-of-type(2),
+  .troubleshooting-section:nth-of-type(3) {
+    grid-column: span 2;
+  }
+
+  .price-card {
+    grid-column: span 6;
+  }
+
+  .info-grid {
+    grid-column: span 6;
+  }
+
+  .warning-card {
+    grid-column: span 6;
+  }
+}
+
+
+/* =========================================================
+   SMALL TABLET
+========================================================= */
+
+@media (max-width: 850px) {
+
+  .troubleshooting-container {
+    width: 92%;
+
+    padding-top: 40px;
+  }
+
+  .troubleshooting-filters {
+    align-items: stretch;
+
+    flex-direction: column;
+  }
+
+  .search-box {
+    width: 100%;
+  }
+
+  .category-buttons {
+    justify-content: center;
+  }
+
+  .problem-card {
+    grid-template-columns: 1fr;
+
+    padding: 22px;
+  }
+
+  .problem-card-header {
+    grid-column: 1;
+  }
+
+  .troubleshooting-section:nth-of-type(1),
+  .troubleshooting-section:nth-of-type(2),
+  .troubleshooting-section:nth-of-type(3),
+  .price-card,
+  .info-grid,
+  .warning-card {
+    grid-column: 1;
+  }
+
+  .info-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .customer-notice {
+    grid-column: 1;
+  }
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 600px) {
+
+  .troubleshooting-container {
+    width: 92%;
+
+    padding: 32px 0 55px;
+  }
+
+  .troubleshooting-header {
+    margin-bottom: 30px;
+  }
+
+  .troubleshooting-header h1 {
+    font-size: 38px;
+
+    letter-spacing: -1.5px;
+  }
+
+  .troubleshooting-header p {
+    font-size: 14px;
+  }
+
+  .category-buttons {
+    justify-content: flex-start;
+
+    flex-wrap: nowrap;
+
+    overflow-x: auto;
+
+    padding-bottom: 5px;
+  }
+
+  .category-button {
+    flex-shrink: 0;
+
+    white-space: nowrap;
+  }
+
+  .problem-card {
+    padding: 17px;
+
+    border-radius: 17px;
+
+    gap: 13px;
+  }
+
+  .problem-card-header {
+    align-items: flex-start;
+
+    flex-direction: column;
+
+    gap: 12px;
+  }
+
+  .problem-card-header h2 {
+    font-size: 23px;
+  }
+
+  .category-badge {
+    align-self: flex-start;
+  }
+
+  .troubleshooting-section,
+  .info-card,
+  .warning-card {
+    padding: 17px;
+  }
+
+  .troubleshooting-section h3,
+  .info-card h3,
+  .warning-card h3 {
+    font-size: 15px;
+  }
+
+  .info-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .price-card {
+    min-height: 170px;
+  }
+}

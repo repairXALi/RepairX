@@ -1,0 +1,425 @@
+.admin-parts-page {
+  min-height: 80vh;
+  background: #0b1020;
+  color: #f5f7ff;
+  padding: 55px 7%;
+}
+
+.admin-parts-container {
+  max-width: 1150px;
+  margin: 0 auto;
+}
+
+/* HEADER */
+
+.parts-management-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 25px;
+  margin-bottom: 30px;
+}
+
+.parts-management-badge {
+  display: inline-block;
+  padding: 8px 16px;
+  border-radius: 20px;
+  background: rgba(59, 130, 246, 0.15);
+  color: #60a5fa;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+.parts-management-header h1 {
+  margin: 0 0 10px;
+  font-size: 42px;
+  font-weight: 800;
+}
+
+.parts-management-header p {
+  margin: 0;
+  color: #94a3b8;
+  font-size: 17px;
+}
+
+.parts-back-btn {
+  padding: 12px 18px;
+  border-radius: 10px;
+  border: 1px solid #334155;
+  background: #151f35;
+  color: white;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.parts-back-btn:hover {
+  border-color: #3b82f6;
+}
+
+/* MESSAGES */
+
+.parts-success-message,
+.parts-error-message {
+  padding: 14px 18px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+.parts-success-message {
+  background: #12351f;
+  border: 1px solid #166534;
+  color: #86efac;
+}
+
+.parts-error-message {
+  background: #3f1515;
+  border: 1px solid #7f1d1d;
+  color: #fca5a5;
+}
+
+/* ADD BUTTON */
+
+.add-part-btn {
+  padding: 14px 22px;
+  border: none;
+  border-radius: 11px;
+  background: #2563eb;
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-bottom: 30px;
+}
+
+.add-part-btn:hover {
+  background: #1d4ed8;
+}
+
+/* FORM */
+
+.part-form-card {
+  background: #121a2e;
+  border: 1px solid #263452;
+  border-radius: 20px;
+  padding: 32px;
+  margin-bottom: 35px;
+}
+
+.part-form-header {
+  margin-bottom: 25px;
+}
+
+.part-form-badge {
+  color: #60a5fa;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.part-form-header h2 {
+  margin: 8px 0 0;
+  font-size: 27px;
+}
+
+/* GRID */
+
+.part-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.part-form-group {
+  margin-bottom: 22px;
+}
+
+.part-form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: #e2e8f0;
+}
+
+.part-form-group input,
+.part-form-group textarea,
+.part-form-group select {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 13px 14px;
+  border-radius: 10px;
+  border: 1px solid #334155;
+  background: #0b1020;
+  color: white;
+  font-size: 15px;
+  font-family: inherit;
+  outline: none;
+}
+
+.part-form-group input:focus,
+.part-form-group textarea:focus,
+.part-form-group select:focus {
+  border-color: #3b82f6;
+}
+
+.part-form-group textarea {
+  min-height: 125px;
+  resize: vertical;
+  line-height: 1.5;
+}
+
+.part-form-group select {
+  cursor: pointer;
+}
+
+.part-form-group small {
+  display: block;
+  margin-top: 6px;
+  color: #64748b;
+}
+
+/* FORM BUTTONS */
+
+.part-form-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.save-part-btn,
+.cancel-part-btn {
+  padding: 13px 22px;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.save-part-btn {
+  border: none;
+  background: #2563eb;
+  color: white;
+}
+
+.save-part-btn:hover {
+  background: #1d4ed8;
+}
+
+.cancel-part-btn {
+  border: 1px solid #475569;
+  background: #19233a;
+  color: white;
+}
+
+.cancel-part-btn:hover {
+  border-color: #64748b;
+}
+
+.save-part-btn:disabled,
+.cancel-part-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* RECORDS */
+
+.parts-records-section {
+  margin-top: 35px;
+}
+
+.parts-records-header {
+  margin-bottom: 20px;
+}
+
+.parts-records-header h2 {
+  margin: 0 0 5px;
+  font-size: 28px;
+}
+
+.parts-records-header p {
+  margin: 0;
+  color: #64748b;
+}
+
+.parts-records-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* PART CARD */
+
+.part-record-card {
+  background: #121a2e;
+  border: 1px solid #263452;
+  border-radius: 16px;
+  padding: 22px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 25px;
+  transition: 0.2s ease;
+}
+
+.part-record-card:hover {
+  border-color: #3158a8;
+  transform: translateY(-2px);
+}
+
+.part-category {
+  display: inline-block;
+  padding: 6px 11px;
+  border-radius: 20px;
+  background: rgba(59, 130, 246, 0.12);
+  color: #60a5fa;
+  font-size: 13px;
+  margin-bottom: 8px;
+}
+
+.part-record-info h3 {
+  margin: 0 0 8px;
+  font-size: 21px;
+}
+
+.part-price {
+  color: #fbbf24;
+  font-weight: 700;
+  margin-bottom: 7px;
+}
+
+.part-available {
+  color: #86efac;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.part-unavailable {
+  color: #fca5a5;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.part-record-info p {
+  margin: 0;
+  color: #94a3b8;
+}
+
+/* ACTIONS */
+
+.part-record-actions {
+  display: flex;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.part-edit-btn,
+.part-delete-btn {
+  padding: 10px 15px;
+  border-radius: 9px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.part-edit-btn {
+  border: 1px solid #3158a8;
+  background: #17264a;
+  color: #93c5fd;
+}
+
+.part-edit-btn:hover {
+  background: #1e3a6f;
+}
+
+.part-delete-btn {
+  border: 1px solid #7f1d1d;
+  background: #3f1515;
+  color: #fca5a5;
+}
+
+.part-delete-btn:hover {
+  background: #521b1b;
+}
+
+/* EMPTY */
+
+.empty-parts {
+  text-align: center;
+  background: #121a2e;
+  border: 1px solid #263452;
+  border-radius: 18px;
+  padding: 50px 20px;
+}
+
+.empty-parts div {
+  font-size: 45px;
+}
+
+.empty-parts h3 {
+  font-size: 22px;
+}
+
+.empty-parts p {
+  color: #64748b;
+}
+
+/* LOADING */
+
+.admin-parts-loading {
+  min-height: 70vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #0b1020;
+  color: #60a5fa;
+  font-size: 22px;
+}
+
+/* MOBILE */
+
+@media (max-width: 750px) {
+  .admin-parts-page {
+    padding: 40px 20px;
+  }
+
+  .parts-management-header {
+    flex-direction: column;
+  }
+
+  .parts-management-header h1 {
+    font-size: 32px;
+  }
+
+  .part-form-card {
+    padding: 22px;
+  }
+
+  .part-form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .part-record-card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .part-record-actions {
+    width: 100%;
+  }
+
+  .part-edit-btn,
+  .part-delete-btn {
+    flex: 1;
+  }
+
+  .part-form-actions {
+    flex-direction: column;
+  }
+
+  .save-part-btn,
+  .cancel-part-btn {
+    width: 100%;
+  }
+}
