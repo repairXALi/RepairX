@@ -4,7 +4,7 @@ function About() {
   const [message, setMessage] = useState("Connecting to RepairX server...");
 
   useEffect(() => {
-    fetch"https://repairx.onrender.com/api/test")
+    fetch("https://repairx.onrender.com/api/test")
       .then((response) => response.json())
       .then((data) => {
         setMessage(data.message);
