@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./AdminDashboard.css";
+import "./admindashboard.css";
 
 function AdminDashboard() {
   const navigate = useNavigate();
@@ -69,13 +69,10 @@ function AdminDashboard() {
 
   return (
     <main className="admin-dashboard">
-
       <div className="admin-dashboard-container">
 
         {/* HEADER */}
-
         <div className="admin-header">
-
           <span className="admin-badge">
             🔐 Admin Panel
           </span>
@@ -87,18 +84,13 @@ function AdminDashboard() {
           <p>
             Welcome back, {admin.name}.
           </p>
-
         </div>
 
-
         {/* STATISTICS */}
-
         <div className="admin-stats">
 
           {/* TROUBLESHOOTING */}
-
           <div className="admin-stat-card">
-
             <div className="admin-stat-icon">
               🔧
             </div>
@@ -114,14 +106,10 @@ function AdminDashboard() {
             <p className="admin-stat-description">
               Records in database
             </p>
-
           </div>
 
-
           {/* PARTS */}
-
           <div className="admin-stat-card">
-
             <div className="admin-stat-icon">
               🔩
             </div>
@@ -137,14 +125,11 @@ function AdminDashboard() {
             <p className="admin-stat-description">
               Parts in database
             </p>
-
           </div>
 
         </div>
 
-
         {/* MANAGEMENT */}
-
         <div className="admin-management">
 
           <h2>
@@ -156,11 +141,9 @@ function AdminDashboard() {
             and parts database.
           </p>
 
-
           <div className="admin-actions">
 
             {/* TROUBLESHOOTING */}
-
             <button
               className="admin-btn admin-btn-primary"
               onClick={() =>
@@ -170,9 +153,7 @@ function AdminDashboard() {
               🔧 Manage Troubleshooting
             </button>
 
-
             {/* PARTS */}
-
             <button
               className="admin-btn admin-btn-secondary"
               onClick={() =>
@@ -183,12 +164,9 @@ function AdminDashboard() {
             </button>
 
           </div>
-
         </div>
 
-
         {/* LOGOUT */}
-
         <button
           className="admin-btn admin-btn-danger"
           onClick={handleLogout}
@@ -197,7 +175,6 @@ function AdminDashboard() {
         </button>
 
       </div>
-
     </main>
   );
 }

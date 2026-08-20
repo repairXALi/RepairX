@@ -1,37 +1,31 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./AdminParts.css";
+import "./adminparts.css";
 
-const emptyForm = {
-  name: "",
-  category: "",
-  compatibleDevices: "",
-  estimatedPrice: "",
-  availability: "Available",
-  description: "",
-  technicianNotes: "",
-  customerNotice:
-    "Actual part availability and pricing may vary depending on the mobile model and part quality.",
-};
+const API_URL = "https://repairx.onrender.com/api/parts";
 
 function AdminParts() {
   const navigate = useNavigate();
 
+  const [admin, setAdmin] = useState(null);
   const [parts, setParts] = useState([]);
-  const [form, setForm] = useState(emptyForm);
+  const [loading, setLoading] = useState(true);
+
+  const [form, setForm] = useState({
+    name: "",
+    category: "",
+    price: "",
+    compatibleDevices: "",
+    description: "",
+  });
 
   const [editingId, setEditingId] = useState(null);
-  const [showForm, setShowForm] = useState(false);
-
-  const [loading, setLoading] = useState(true);
-  const [saving, setSaving] = useState(false);
-
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
 
-  // =========================================
-  // CHECK ADMIN LOGIN
-  // =========================================
+  // =========================
+  // CHECK ADMIN
+  // =========================
 
   useEffect(() => {
     const storedAdmin = localStorage.getItem("repairxAdmin");
@@ -41,41 +35,54 @@ function AdminParts() {
       return;
     }
 
-    fetchParts();
+    try {
+      setAdmin(JSON.parse(storedAdmin));
+    } catch (err) {
+      console.error("Admin data error:", err);
+      localStorage.removeItem("repairxAdmin");
+      navigate("/login");
+    }
   }, [navigate]);
 
-  // =========================================
-  // FETCH PARTS
-  // =========================================
+  // =========================
+  // LOAD PARTS
+  // =========================
 
-  const fetchParts = async () => {
+  useEffect(() => {
+    if (!admin) return;
+
+    loadParts();
+  }, [admin]);
+
+  const loadParts = async () => {
     try {
       setLoading(true);
       setError("");
 
-      const response = await fetch("/api/parts");
+      const response = await fetch(API_URL);
       const result = await response.json();
 
-      if (!response.ok) {
+      if (!response.ok || !result.success) {
         throw new Error(
-          result.message || "Failed to fetch parts"
+          result.message || "Failed to load parts"
         );
       }
 
       setParts(result.data || []);
     } catch (err) {
-      setError(err.message);
+      console.error("Parts loading error:", err);
+      setError("Unable to load parts.");
     } finally {
       setLoading(false);
     }
   };
 
-  // =========================================
-  // INPUT CHANGE
-  // =========================================
+  // =========================
+  // FORM INPUT
+  // =========================
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
+  const handleChange = (event) => {
+    const { name, value } = event.target;
 
     setForm((previous) => ({
       ...previous,
@@ -83,130 +90,45 @@ function AdminParts() {
     }));
   };
 
-  // =========================================
-  // TEXT ↔ ARRAY
-  // =========================================
+  // =========================
+  // ADD / UPDATE
+  // =========================
 
-  const textToArray = (text) => {
-    return text
-      .split("\n")
-      .map((item) => item.trim())
-      .filter((item) => item.length > 0);
-  };
+  const handleSubmit = async (event) => {
+    event.preventDefault();
 
-  const arrayToText = (array) => {
-    if (!Array.isArray(array)) {
-      return "";
+    setMessage("");
+    setError("");
+
+    if (!form.name.trim()) {
+      setError("Part name is required.");
+      return;
     }
 
-    return array.join("\n");
-  };
-
-  // =========================================
-  // ADD FORM
-  // =========================================
-
-  const openAddForm = () => {
-    setEditingId(null);
-    setForm(emptyForm);
-    setMessage("");
-    setError("");
-    setShowForm(true);
-
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
-  };
-
-  // =========================================
-  // EDIT FORM
-  // =========================================
-
-  const openEditForm = (part) => {
-    setEditingId(part._id);
-
-    setForm({
-      name: part.name || "",
-
-      category: part.category || "",
-
-      compatibleDevices: arrayToText(
-        part.compatibleDevices
-      ),
-
-      estimatedPrice:
-        part.estimatedPrice || "",
-
-      availability:
-        part.availability || "Available",
-
-      description:
-        part.description || "",
-
-      technicianNotes: arrayToText(
-        part.technicianNotes
-      ),
-
-      customerNotice:
-        part.customerNotice || "",
-    });
-
-    setMessage("");
-    setError("");
-    setShowForm(true);
-
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
-  };
-
-  // =========================================
-  // ADD / UPDATE
-  // =========================================
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    setSaving(true);
-    setMessage("");
-    setError("");
-
-    const payload = {
-      name: form.name.trim(),
-
-      category: form.category.trim(),
-
-      compatibleDevices: textToArray(
-        form.compatibleDevices
-      ),
-
-      estimatedPrice:
-        form.estimatedPrice.trim(),
-
-      availability:
-        form.availability.trim(),
-
-      description:
-        form.description.trim(),
-
-      technicianNotes: textToArray(
-        form.technicianNotes
-      ),
-
-      customerNotice:
-        form.customerNotice.trim(),
-    };
+    if (!form.category.trim()) {
+      setError("Category is required.");
+      return;
+    }
 
     try {
-      const url = editingId
-        ? `/api/parts/${editingId}`
-        : "/api/parts";
+      const isEditing = Boolean(editingId);
 
-      const method = editingId
-        ? "PUT"
-        : "POST";
+      const url = isEditing
+        ? `${API_URL}/${editingId}`
+        : API_URL;
+
+      const method = isEditing ? "PUT" : "POST";
+
+      const payload = {
+        name: form.name.trim(),
+        category: form.category.trim(),
+        price: Number(form.price) || 0,
+        compatibleDevices: form.compatibleDevices
+          .split(",")
+          .map((device) => device.trim())
+          .filter(Boolean),
+        description: form.description.trim(),
+      };
 
       const response = await fetch(url, {
         method,
@@ -218,50 +140,74 @@ function AdminParts() {
 
       const result = await response.json();
 
-      if (!response.ok) {
+      if (!response.ok || !result.success) {
         throw new Error(
           result.message ||
-            "Failed to save part"
+            (isEditing
+              ? "Failed to update part"
+              : "Failed to add part")
         );
       }
 
       setMessage(
-        editingId
-          ? "Part updated successfully!"
-          : "Part added successfully!"
+        isEditing
+          ? "Part updated successfully."
+          : "Part added successfully."
       );
 
-      setForm(emptyForm);
-      setEditingId(null);
-      setShowForm(false);
-
-      await fetchParts();
+      resetForm();
+      loadParts();
     } catch (err) {
-      setError(err.message);
-    } finally {
-      setSaving(false);
+      console.error("Part save error:", err);
+      setError(err.message || "Something went wrong.");
     }
   };
 
-  // =========================================
-  // DELETE
-  // =========================================
+  // =========================
+  // EDIT
+  // =========================
 
-  const handleDelete = async (id, name) => {
+  const handleEdit = (part) => {
+    setEditingId(part._id);
+
+    setForm({
+      name: part.name || "",
+      category: part.category || "",
+      price: part.price || "",
+      compatibleDevices: Array.isArray(
+        part.compatibleDevices
+      )
+        ? part.compatibleDevices.join(", ")
+        : part.compatibleDevices || "",
+      description: part.description || "",
+    });
+
+    setMessage("");
+    setError("");
+
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
+
+  // =========================
+  // DELETE
+  // =========================
+
+  const handleDelete = async (id) => {
     const confirmed = window.confirm(
-      `Are you sure you want to delete "${name}"?`
+      "Are you sure you want to delete this part?"
     );
 
-    if (!confirmed) {
-      return;
-    }
+    if (!confirmed) return;
 
     try {
-      setError("");
       setMessage("");
+      setError("");
 
       const response = await fetch(
-        `/api/parts/${id}`,
+        `${API_URL}/${id}`,
         {
           method: "DELETE",
         }
@@ -269,75 +215,94 @@ function AdminParts() {
 
       const result = await response.json();
 
-      if (!response.ok) {
+      if (!response.ok || !result.success) {
         throw new Error(
-          result.message ||
-            "Failed to delete part"
+          result.message || "Failed to delete part"
         );
       }
 
-      setMessage(
-        "Part deleted successfully!"
-      );
+      setMessage("Part deleted successfully.");
 
-      await fetchParts();
+      if (editingId === id) {
+        resetForm();
+      }
+
+      loadParts();
     } catch (err) {
-      setError(err.message);
+      console.error("Part delete error:", err);
+      setError(err.message || "Failed to delete part.");
     }
   };
 
-  // =========================================
-  // CANCEL
-  // =========================================
+  // =========================
+  // RESET FORM
+  // =========================
 
-  const cancelForm = () => {
-    setShowForm(false);
+  const resetForm = () => {
+    setForm({
+      name: "",
+      category: "",
+      price: "",
+      compatibleDevices: "",
+      description: "",
+    });
+
     setEditingId(null);
-    setForm(emptyForm);
-    setError("");
   };
 
-  // =========================================
-  // LOADING
-  // =========================================
+  // =========================
+  // LOGOUT
+  // =========================
 
-  if (loading) {
+  const handleLogout = () => {
+    localStorage.removeItem("repairxAdmin");
+    navigate("/login");
+  };
+
+  // =========================
+  // LOADING
+  // =========================
+
+  if (!admin || loading) {
     return (
-      <div className="admin-parts-loading">
-        Loading parts data...
-      </div>
+      <main className="admin-parts-page">
+        <div className="admin-parts-loading">
+          Loading Parts Management...
+        </div>
+      </main>
     );
   }
 
-  // =========================================
-  // PAGE
-  // =========================================
+  // =========================
+  // UI
+  // =========================
 
   return (
     <main className="admin-parts-page">
+
       <div className="admin-parts-container">
 
         {/* HEADER */}
 
-        <div className="parts-management-header">
+        <div className="admin-parts-header">
 
           <div>
-            <span className="parts-management-badge">
-              🔐 Admin Management
+            <span className="admin-parts-badge">
+              🔩 Admin Panel
             </span>
 
             <h1>
-              Parts & Prices Management
+              Manage Parts & Prices
             </h1>
 
             <p>
-              Add, edit and delete mobile
-              repair parts and pricing.
+              Add, update and remove repair parts
+              from the RepairX database.
             </p>
           </div>
 
           <button
-            className="parts-back-btn"
+            className="admin-parts-back-btn"
             onClick={() => navigate("/admin")}
           >
             ← Dashboard
@@ -345,376 +310,291 @@ function AdminParts() {
 
         </div>
 
-
-        {/* MESSAGES */}
+        {/* MESSAGE */}
 
         {message && (
-          <div className="parts-success-message">
+          <div className="admin-parts-success">
             ✅ {message}
           </div>
         )}
 
         {error && (
-          <div className="parts-error-message">
+          <div className="admin-parts-error">
             ❌ {error}
           </div>
         )}
 
-
-        {/* ADD BUTTON */}
-
-        {!showForm && (
-          <button
-            className="add-part-btn"
-            onClick={openAddForm}
-          >
-            + Add New Part
-          </button>
-        )}
-
-
         {/* FORM */}
 
-        {showForm && (
-          <section className="part-form-card">
+        <section className="admin-parts-form-card">
 
-            <div className="part-form-header">
+          <div className="admin-parts-section-heading">
 
-              <span className="part-form-badge">
-                {editingId
-                  ? "✏️ Edit Part"
-                  : "➕ New Part"}
-              </span>
+            <h2>
+              {editingId
+                ? "✏️ Edit Part"
+                : "➕ Add New Part"}
+            </h2>
 
-              <h2>
-                {editingId
-                  ? "Edit Part"
-                  : "Add New Part"}
-              </h2>
+            <p>
+              Enter the part information below.
+            </p>
 
-            </div>
+          </div>
 
+          <form
+            className="admin-parts-form"
+            onSubmit={handleSubmit}
+          >
 
-            <form onSubmit={handleSubmit}>
+            <div className="admin-parts-form-grid">
 
-              {/* NAME + CATEGORY */}
+              <div className="admin-parts-form-group">
+                <label htmlFor="name">
+                  Part Name
+                </label>
 
-              <div className="part-form-grid">
-
-                <div className="part-form-group">
-                  <label>
-                    Part Name *
-                  </label>
-
-                  <input
-                    type="text"
-                    name="name"
-                    value={form.name}
-                    onChange={handleChange}
-                    placeholder="Example: Charging Connector"
-                    required
-                  />
-                </div>
-
-
-                <div className="part-form-group">
-                  <label>
-                    Category *
-                  </label>
-
-                  <input
-                    type="text"
-                    name="category"
-                    value={form.category}
-                    onChange={handleChange}
-                    placeholder="Example: Charging"
-                    required
-                  />
-                </div>
-
+                <input
+                  id="name"
+                  name="name"
+                  type="text"
+                  placeholder="Example: iPhone Battery"
+                  value={form.name}
+                  onChange={handleChange}
+                  required
+                />
               </div>
 
 
-              {/* COMPATIBLE DEVICES */}
+              <div className="admin-parts-form-group">
+                <label htmlFor="category">
+                  Category
+                </label>
 
-              <div className="part-form-group">
+                <input
+                  id="category"
+                  name="category"
+                  type="text"
+                  placeholder="Example: Battery"
+                  value={form.category}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
 
-                <label>
+
+              <div className="admin-parts-form-group">
+                <label htmlFor="price">
+                  Price
+                </label>
+
+                <input
+                  id="price"
+                  name="price"
+                  type="number"
+                  min="0"
+                  placeholder="Example: 1500"
+                  value={form.price}
+                  onChange={handleChange}
+                />
+              </div>
+
+
+              <div className="admin-parts-form-group">
+                <label htmlFor="compatibleDevices">
                   Compatible Devices
                 </label>
 
-                <textarea
+                <input
+                  id="compatibleDevices"
                   name="compatibleDevices"
+                  type="text"
+                  placeholder="iPhone 13, iPhone 14, iPhone 15"
                   value={form.compatibleDevices}
                   onChange={handleChange}
-                  placeholder={`Write one device per line.
-
-Example:
-Samsung Galaxy A12
-Samsung Galaxy A13
-Samsung Galaxy A14`}
                 />
 
                 <small>
-                  Write each device on a new line.
+                  Separate multiple devices with commas.
                 </small>
-
               </div>
 
 
-              {/* PRICE + AVAILABILITY */}
-
-              <div className="part-form-grid">
-
-                <div className="part-form-group">
-
-                  <label>
-                    Estimated Price *
-                  </label>
-
-                  <input
-                    type="text"
-                    name="estimatedPrice"
-                    value={form.estimatedPrice}
-                    onChange={handleChange}
-                    placeholder="Example: ₹350–₹500"
-                    required
-                  />
-
-                </div>
-
-
-                <div className="part-form-group">
-
-                  <label>
-                    Availability
-                  </label>
-
-                  <select
-                    name="availability"
-                    value={form.availability}
-                    onChange={handleChange}
-                  >
-                    <option value="Available">
-                      Available
-                    </option>
-
-                    <option value="Limited">
-                      Limited
-                    </option>
-
-                    <option value="Out of Stock">
-                      Out of Stock
-                    </option>
-
-                    <option value="On Order">
-                      On Order
-                    </option>
-                  </select>
-
-                </div>
-
-              </div>
-
-
-              {/* DESCRIPTION */}
-
-              <div className="part-form-group">
-
-                <label>
+              <div className="admin-parts-form-group admin-parts-full-width">
+                <label htmlFor="description">
                   Description
                 </label>
 
                 <textarea
+                  id="description"
                   name="description"
+                  rows="4"
+                  placeholder="Enter a short description..."
                   value={form.description}
                   onChange={handleChange}
-                  placeholder="Describe the part and its use."
                 />
-
               </div>
 
-
-              {/* TECHNICIAN NOTES */}
-
-              <div className="part-form-group">
-
-                <label>
-                  Technician Notes
-                </label>
-
-                <textarea
-                  name="technicianNotes"
-                  value={form.technicianNotes}
-                  onChange={handleChange}
-                  placeholder={`Write one note per line.
-
-Example:
-Check part compatibility before replacement.
-Use a good-quality replacement part.`}
-                />
-
-              </div>
+            </div>
 
 
-              {/* CUSTOMER NOTICE */}
+            <div className="admin-parts-form-actions">
 
-              <div className="part-form-group">
+              <button
+                type="submit"
+                className="admin-parts-submit-btn"
+              >
+                {editingId
+                  ? "💾 Update Part"
+                  : "➕ Add Part"}
+              </button>
 
-                <label>
-                  Customer Notice
-                </label>
-
-                <textarea
-                  name="customerNotice"
-                  value={form.customerNotice}
-                  onChange={handleChange}
-                  placeholder="Customer notice"
-                />
-
-              </div>
-
-
-              {/* BUTTONS */}
-
-              <div className="part-form-actions">
-
-                <button
-                  type="submit"
-                  className="save-part-btn"
-                  disabled={saving}
-                >
-                  {saving
-                    ? "Saving..."
-                    : editingId
-                    ? "Update Part"
-                    : "Add Part"}
-                </button>
-
+              {editingId && (
                 <button
                   type="button"
-                  className="cancel-part-btn"
-                  onClick={cancelForm}
-                  disabled={saving}
+                  className="admin-parts-cancel-btn"
+                  onClick={resetForm}
                 >
-                  Cancel
+                  Cancel Edit
                 </button>
+              )}
 
-              </div>
+            </div>
 
-            </form>
+          </form>
 
-          </section>
-        )}
+        </section>
 
 
         {/* PARTS LIST */}
 
-        <section className="parts-records-section">
+        <section className="admin-parts-list-card">
 
-          <div className="parts-records-header">
+          <div className="admin-parts-list-header">
 
             <div>
               <h2>
-                Parts & Prices
+                Parts Database
               </h2>
 
               <p>
-                {parts.length} parts found
+                Total parts: <strong>{parts.length}</strong>
               </p>
             </div>
+
+            <button
+              className="admin-parts-refresh-btn"
+              onClick={loadParts}
+            >
+              🔄 Refresh
+            </button>
 
           </div>
 
 
           {parts.length === 0 ? (
 
-            <div className="empty-parts">
-
-              <div>🔩</div>
+            <div className="admin-parts-empty">
+              <div className="admin-parts-empty-icon">
+                🔩
+              </div>
 
               <h3>
                 No parts found
               </h3>
 
               <p>
-                Add your first part.
+                Add your first repair part using
+                the form above.
               </p>
-
             </div>
 
           ) : (
 
-            <div className="parts-records-list">
+            <div className="admin-parts-table-wrapper">
 
-              {parts.map((part) => (
+              <table className="admin-parts-table">
 
-                <article
-                  className="part-record-card"
-                  key={part._id}
-                >
+                <thead>
+                  <tr>
+                    <th>Part</th>
+                    <th>Category</th>
+                    <th>Price</th>
+                    <th>Compatible Devices</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
 
-                  <div className="part-record-info">
+                <tbody>
 
-                    <span className="part-category">
-                      {part.category}
-                    </span>
+                  {parts.map((part) => (
 
-                    <h3>
-                      {part.name}
-                    </h3>
+                    <tr key={part._id}>
 
-                    <div className="part-price">
-                      💰 {part.estimatedPrice}
-                    </div>
+                      <td>
+                        <strong>
+                          {part.name}
+                        </strong>
 
-                    <div
-                      className={
-                        part.availability ===
-                        "Available"
-                          ? "part-available"
-                          : "part-unavailable"
-                      }
-                    >
-                      ● {part.availability}
-                    </div>
+                        {part.description && (
+                          <small>
+                            {part.description}
+                          </small>
+                        )}
+                      </td>
 
-                    <p>
-                      {part.description ||
-                        "No description added."}
-                    </p>
+                      <td>
+                        {part.category || "—"}
+                      </td>
 
-                  </div>
+                      <td>
+                        ₹{part.price || 0}
+                      </td>
 
-
-                  <div className="part-record-actions">
-
-                    <button
-                      className="part-edit-btn"
-                      onClick={() =>
-                        openEditForm(part)
-                      }
-                    >
-                      ✏️ Edit
-                    </button>
-
-                    <button
-                      className="part-delete-btn"
-                      onClick={() =>
-                        handleDelete(
-                          part._id,
-                          part.name
+                      <td>
+                        {Array.isArray(
+                          part.compatibleDevices
                         )
-                      }
-                    >
-                      🗑️ Delete
-                    </button>
+                          ? part.compatibleDevices.join(
+                              ", "
+                            )
+                          : part.compatibleDevices ||
+                            "—"}
+                      </td>
 
-                  </div>
+                      <td>
 
-                </article>
+                        <div className="admin-parts-actions">
 
-              ))}
+                          <button
+                            className="admin-parts-edit-btn"
+                            onClick={() =>
+                              handleEdit(part)
+                            }
+                          >
+                            ✏️ Edit
+                          </button>
+
+                          <button
+                            className="admin-parts-delete-btn"
+                            onClick={() =>
+                              handleDelete(part._id)
+                            }
+                          >
+                            🗑️ Delete
+                          </button>
+
+                        </div>
+
+                      </td>
+
+                    </tr>
+
+                  ))}
+
+                </tbody>
+
+              </table>
 
             </div>
 
@@ -722,7 +602,18 @@ Use a good-quality replacement part.`}
 
         </section>
 
+
+        {/* LOGOUT */}
+
+        <button
+          className="admin-parts-logout-btn"
+          onClick={handleLogout}
+        >
+          Logout
+        </button>
+
       </div>
+
     </main>
   );
 }
