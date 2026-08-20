@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./AdminTroubleshooting.css";
 
+const API_URL = "https://repairx-server.onrender.com/api";
+
 const emptyForm = {
   title: "",
   category: "",
@@ -56,7 +58,7 @@ function AdminTroubleshooting() {
       setError("");
 
       const response = await fetch(
-        "/api/troubleshooting"
+        `${API_URL}/troubleshooting`
       );
 
       const result = await response.json();
@@ -69,6 +71,7 @@ function AdminTroubleshooting() {
 
       setProblems(result.data || []);
     } catch (err) {
+      console.error("Fetch troubleshooting error:", err);
       setError(err.message);
     } finally {
       setLoading(false);
@@ -220,8 +223,8 @@ function AdminTroubleshooting() {
 
     try {
       const url = editingId
-        ? `/api/troubleshooting/${editingId}`
-        : "/api/troubleshooting";
+        ? `${API_URL}/troubleshooting/${editingId}`
+        : `${API_URL}/troubleshooting`;
 
       const method = editingId
         ? "PUT"
@@ -229,9 +232,11 @@ function AdminTroubleshooting() {
 
       const response = await fetch(url, {
         method,
+
         headers: {
           "Content-Type": "application/json",
         },
+
         body: JSON.stringify(payload),
       });
 
@@ -256,6 +261,11 @@ function AdminTroubleshooting() {
 
       await fetchProblems();
     } catch (err) {
+      console.error(
+        "Save troubleshooting error:",
+        err
+      );
+
       setError(err.message);
     } finally {
       setSaving(false);
@@ -280,7 +290,7 @@ function AdminTroubleshooting() {
       setMessage("");
 
       const response = await fetch(
-        `/api/troubleshooting/${id}`,
+        `${API_URL}/troubleshooting/${id}`,
         {
           method: "DELETE",
         }
@@ -301,6 +311,11 @@ function AdminTroubleshooting() {
 
       await fetchProblems();
     } catch (err) {
+      console.error(
+        "Delete troubleshooting error:",
+        err
+      );
+
       setError(err.message);
     }
   };
@@ -339,7 +354,6 @@ function AdminTroubleshooting() {
         {/* HEADER */}
 
         <div className="management-header">
-
           <div>
             <span className="management-badge">
               🔐 Admin Management
@@ -361,7 +375,6 @@ function AdminTroubleshooting() {
           >
             ← Dashboard
           </button>
-
         </div>
 
         {/* MESSAGE */}
@@ -448,7 +461,7 @@ function AdminTroubleshooting() {
 
               </div>
 
-              {/* ARRAYS */}
+              {/* SYMPTOMS */}
 
               <div className="form-group">
                 <label>
@@ -472,6 +485,8 @@ Charging connector feels loose`}
                 </small>
               </div>
 
+              {/* POSSIBLE CAUSES */}
+
               <div className="form-group">
                 <label>
                   Possible Causes
@@ -491,6 +506,8 @@ Motherboard problem`}
                 />
               </div>
 
+              {/* DIAGNOSTIC STEPS */}
+
               <div className="form-group">
                 <label>
                   Diagnostic Steps
@@ -509,6 +526,8 @@ Check the charging current.`}
                 />
               </div>
 
+              {/* SOLUTION */}
+
               <div className="form-group">
                 <label>
                   Recommended Solution
@@ -518,9 +537,11 @@ Check the charging current.`}
                   name="recommendedSolution"
                   value={form.recommendedSolution}
                   onChange={handleChange}
-                  placeholder={`Write one solution per line.`}
+                  placeholder="Write one solution per line."
                 />
               </div>
+
+              {/* REQUIRED PARTS */}
 
               <div className="form-group">
                 <label>
@@ -555,7 +576,7 @@ Sub-board`}
                 />
               </div>
 
-              {/* NOTES */}
+              {/* TECHNICIAN NOTES */}
 
               <div className="form-group">
                 <label>
@@ -570,6 +591,8 @@ Sub-board`}
                 />
               </div>
 
+              {/* WARNINGS */}
+
               <div className="form-group">
                 <label>
                   Warnings
@@ -582,6 +605,8 @@ Sub-board`}
                   placeholder="Write one warning per line."
                 />
               </div>
+
+              {/* CUSTOMER NOTICE */}
 
               <div className="form-group">
                 <label>
@@ -645,6 +670,7 @@ Sub-board`}
 
           {problems.length === 0 ? (
             <div className="empty-records">
+
               <div>🔧</div>
 
               <h3>
@@ -654,6 +680,7 @@ Sub-board`}
               <p>
                 Add your first troubleshooting problem.
               </p>
+
             </div>
           ) : (
             <div className="records-list">
