@@ -1,3 +1,7 @@
+/* ========================================
+   ADMIN PARTS PAGE
+======================================== */
+
 .admin-parts-page {
   min-height: 80vh;
   background: #0b1020;
@@ -10,9 +14,11 @@
   margin: 0 auto;
 }
 
-/* HEADER */
+/* ========================================
+   HEADER
+======================================== */
 
-.parts-management-header {
+.admin-parts-header {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
@@ -20,7 +26,7 @@
   margin-bottom: 30px;
 }
 
-.parts-management-badge {
+.admin-parts-badge {
   display: inline-block;
   padding: 8px 16px;
   border-radius: 20px;
@@ -31,19 +37,19 @@
   margin-bottom: 15px;
 }
 
-.parts-management-header h1 {
+.admin-parts-header h1 {
   margin: 0 0 10px;
   font-size: 42px;
   font-weight: 800;
 }
 
-.parts-management-header p {
+.admin-parts-header p {
   margin: 0;
   color: #94a3b8;
   font-size: 17px;
 }
 
-.parts-back-btn {
+.admin-parts-back-btn {
   padding: 12px 18px;
   border-radius: 10px;
   border: 1px solid #334155;
@@ -53,53 +59,40 @@
   font-size: 15px;
 }
 
-.parts-back-btn:hover {
+.admin-parts-back-btn:hover {
   border-color: #3b82f6;
+  background: #17264a;
 }
 
-/* MESSAGES */
+/* ========================================
+   MESSAGES
+======================================== */
 
-.parts-success-message,
-.parts-error-message {
+.admin-parts-success,
+.admin-parts-error {
   padding: 14px 18px;
   border-radius: 12px;
   margin-bottom: 20px;
   font-weight: 600;
 }
 
-.parts-success-message {
+.admin-parts-success {
   background: #12351f;
   border: 1px solid #166534;
   color: #86efac;
 }
 
-.parts-error-message {
+.admin-parts-error {
   background: #3f1515;
   border: 1px solid #7f1d1d;
   color: #fca5a5;
 }
 
-/* ADD BUTTON */
+/* ========================================
+   FORM CARD
+======================================== */
 
-.add-part-btn {
-  padding: 14px 22px;
-  border: none;
-  border-radius: 11px;
-  background: #2563eb;
-  color: white;
-  font-size: 16px;
-  font-weight: 600;
-  cursor: pointer;
-  margin-bottom: 30px;
-}
-
-.add-part-btn:hover {
-  background: #1d4ed8;
-}
-
-/* FORM */
-
-.part-form-card {
+.admin-parts-form-card {
   background: #121a2e;
   border: 1px solid #263452;
   border-radius: 20px;
@@ -107,43 +100,43 @@
   margin-bottom: 35px;
 }
 
-.part-form-header {
+.admin-parts-section-heading {
   margin-bottom: 25px;
 }
 
-.part-form-badge {
-  color: #60a5fa;
-  font-size: 14px;
-  font-weight: 600;
-}
-
-.part-form-header h2 {
-  margin: 8px 0 0;
+.admin-parts-section-heading h2 {
+  margin: 0 0 8px;
   font-size: 27px;
 }
 
-/* GRID */
+.admin-parts-section-heading p {
+  margin: 0;
+  color: #94a3b8;
+}
 
-.part-form-grid {
+/* ========================================
+   FORM
+======================================== */
+
+.admin-parts-form-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 20px;
 }
 
-.part-form-group {
+.admin-parts-form-group {
   margin-bottom: 22px;
 }
 
-.part-form-group label {
+.admin-parts-form-group label {
   display: block;
   margin-bottom: 8px;
   font-weight: 600;
   color: #e2e8f0;
 }
 
-.part-form-group input,
-.part-form-group textarea,
-.part-form-group select {
+.admin-parts-form-group input,
+.admin-parts-form-group textarea {
   width: 100%;
   box-sizing: border-box;
   padding: 13px 14px;
@@ -156,38 +149,40 @@
   outline: none;
 }
 
-.part-form-group input:focus,
-.part-form-group textarea:focus,
-.part-form-group select:focus {
+.admin-parts-form-group input:focus,
+.admin-parts-form-group textarea:focus {
   border-color: #3b82f6;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
 }
 
-.part-form-group textarea {
+.admin-parts-form-group textarea {
   min-height: 125px;
   resize: vertical;
   line-height: 1.5;
 }
 
-.part-form-group select {
-  cursor: pointer;
-}
-
-.part-form-group small {
+.admin-parts-form-group small {
   display: block;
   margin-top: 6px;
   color: #64748b;
 }
 
-/* FORM BUTTONS */
+.admin-parts-full-width {
+  grid-column: 1 / -1;
+}
 
-.part-form-actions {
+/* ========================================
+   FORM BUTTONS
+======================================== */
+
+.admin-parts-form-actions {
   display: flex;
   gap: 12px;
   margin-top: 10px;
 }
 
-.save-part-btn,
-.cancel-part-btn {
+.admin-parts-submit-btn,
+.admin-parts-cancel-btn {
   padding: 13px 22px;
   border-radius: 10px;
   font-size: 15px;
@@ -195,177 +190,198 @@
   cursor: pointer;
 }
 
-.save-part-btn {
+.admin-parts-submit-btn {
   border: none;
   background: #2563eb;
   color: white;
 }
 
-.save-part-btn:hover {
+.admin-parts-submit-btn:hover {
   background: #1d4ed8;
 }
 
-.cancel-part-btn {
+.admin-parts-cancel-btn {
   border: 1px solid #475569;
   background: #19233a;
   color: white;
 }
 
-.cancel-part-btn:hover {
+.admin-parts-cancel-btn:hover {
   border-color: #64748b;
 }
 
-.save-part-btn:disabled,
-.cancel-part-btn:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
+/* ========================================
+   PARTS DATABASE
+======================================== */
+
+.admin-parts-list-card {
+  background: #121a2e;
+  border: 1px solid #263452;
+  border-radius: 20px;
+  padding: 30px;
 }
 
-/* RECORDS */
-
-.parts-records-section {
-  margin-top: 35px;
+.admin-parts-list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 25px;
 }
 
-.parts-records-header {
-  margin-bottom: 20px;
-}
-
-.parts-records-header h2 {
+.admin-parts-list-header h2 {
   margin: 0 0 5px;
   font-size: 28px;
 }
 
-.parts-records-header p {
+.admin-parts-list-header p {
   margin: 0;
   color: #64748b;
 }
 
-.parts-records-list {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
+.admin-parts-refresh-btn {
+  padding: 11px 16px;
+  border-radius: 9px;
+  border: 1px solid #334155;
+  background: #17264a;
+  color: #93c5fd;
+  cursor: pointer;
+  font-weight: 600;
 }
 
-/* PART CARD */
-
-.part-record-card {
-  background: #121a2e;
-  border: 1px solid #263452;
-  border-radius: 16px;
-  padding: 22px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 25px;
-  transition: 0.2s ease;
+.admin-parts-refresh-btn:hover {
+  background: #1e3a6f;
 }
 
-.part-record-card:hover {
-  border-color: #3158a8;
-  transform: translateY(-2px);
+/* ========================================
+   TABLE
+======================================== */
+
+.admin-parts-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
 }
 
-.part-category {
-  display: inline-block;
-  padding: 6px 11px;
-  border-radius: 20px;
-  background: rgba(59, 130, 246, 0.12);
+.admin-parts-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 850px;
+}
+
+.admin-parts-table th {
+  text-align: left;
+  padding: 15px;
+  background: #17233d;
+  color: #93c5fd;
+  font-size: 14px;
+  font-weight: 700;
+  border-bottom: 1px solid #334155;
+}
+
+.admin-parts-table td {
+  padding: 18px 15px;
+  border-bottom: 1px solid #263452;
+  color: #e2e8f0;
+  vertical-align: top;
+}
+
+.admin-parts-table tbody tr:hover {
+  background: rgba(37, 99, 235, 0.05);
+}
+
+.admin-parts-table td strong {
+  display: block;
+  font-size: 16px;
+  color: white;
+  margin-bottom: 6px;
+}
+
+.admin-parts-table td small {
+  display: block;
+  color: #94a3b8;
+  line-height: 1.5;
+  max-width: 300px;
+}
+
+.admin-parts-table td:nth-child(2) {
   color: #60a5fa;
-  font-size: 13px;
-  margin-bottom: 8px;
+  font-weight: 600;
 }
 
-.part-record-info h3 {
-  margin: 0 0 8px;
-  font-size: 21px;
-}
-
-.part-price {
+.admin-parts-table td:nth-child(3) {
   color: #fbbf24;
   font-weight: 700;
-  margin-bottom: 7px;
 }
 
-.part-available {
-  color: #86efac;
-  font-size: 14px;
-  font-weight: 600;
-  margin-bottom: 8px;
-}
+/* ========================================
+   ACTION BUTTONS
+======================================== */
 
-.part-unavailable {
-  color: #fca5a5;
-  font-size: 14px;
-  font-weight: 600;
-  margin-bottom: 8px;
-}
-
-.part-record-info p {
-  margin: 0;
-  color: #94a3b8;
-}
-
-/* ACTIONS */
-
-.part-record-actions {
+.admin-parts-actions {
   display: flex;
-  gap: 10px;
-  flex-shrink: 0;
+  gap: 8px;
 }
 
-.part-edit-btn,
-.part-delete-btn {
-  padding: 10px 15px;
+.admin-parts-edit-btn,
+.admin-parts-delete-btn {
+  padding: 9px 13px;
   border-radius: 9px;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 600;
   cursor: pointer;
+  white-space: nowrap;
 }
 
-.part-edit-btn {
+.admin-parts-edit-btn {
   border: 1px solid #3158a8;
   background: #17264a;
   color: #93c5fd;
 }
 
-.part-edit-btn:hover {
+.admin-parts-edit-btn:hover {
   background: #1e3a6f;
 }
 
-.part-delete-btn {
+.admin-parts-delete-btn {
   border: 1px solid #7f1d1d;
   background: #3f1515;
   color: #fca5a5;
 }
 
-.part-delete-btn:hover {
+.admin-parts-delete-btn:hover {
   background: #521b1b;
 }
 
-/* EMPTY */
+/* ========================================
+   EMPTY STATE
+======================================== */
 
-.empty-parts {
+.admin-parts-empty {
   text-align: center;
-  background: #121a2e;
+  padding: 55px 20px;
+  background: #0f172a;
   border: 1px solid #263452;
-  border-radius: 18px;
-  padding: 50px 20px;
+  border-radius: 15px;
 }
 
-.empty-parts div {
+.admin-parts-empty-icon {
   font-size: 45px;
+  margin-bottom: 10px;
 }
 
-.empty-parts h3 {
+.admin-parts-empty h3 {
+  margin: 0 0 8px;
   font-size: 22px;
 }
 
-.empty-parts p {
+.admin-parts-empty p {
+  margin: 0;
   color: #64748b;
 }
 
-/* LOADING */
+/* ========================================
+   LOADING
+======================================== */
 
 .admin-parts-loading {
   min-height: 70vh;
@@ -377,49 +393,89 @@
   font-size: 22px;
 }
 
-/* MOBILE */
+/* ========================================
+   LOGOUT
+======================================== */
+
+.admin-parts-logout-btn {
+  margin-top: 25px;
+  padding: 12px 20px;
+  border-radius: 10px;
+  border: 1px solid #7f1d1d;
+  background: #3f1515;
+  color: #fca5a5;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.admin-parts-logout-btn:hover {
+  background: #521b1b;
+}
+
+/* ========================================
+   MOBILE
+======================================== */
 
 @media (max-width: 750px) {
+
   .admin-parts-page {
     padding: 40px 20px;
   }
 
-  .parts-management-header {
+  .admin-parts-header {
     flex-direction: column;
   }
 
-  .parts-management-header h1 {
+  .admin-parts-header h1 {
     font-size: 32px;
   }
 
-  .part-form-card {
+  .admin-parts-back-btn {
+    width: 100%;
+  }
+
+  .admin-parts-form-card,
+  .admin-parts-list-card {
     padding: 22px;
   }
 
-  .part-form-grid {
+  .admin-parts-form-grid {
     grid-template-columns: 1fr;
   }
 
-  .part-record-card {
+  .admin-parts-full-width {
+    grid-column: auto;
+  }
+
+  .admin-parts-list-header {
     flex-direction: column;
     align-items: flex-start;
   }
 
-  .part-record-actions {
+  .admin-parts-refresh-btn {
     width: 100%;
   }
 
-  .part-edit-btn,
-  .part-delete-btn {
-    flex: 1;
+  .admin-parts-table-wrapper {
+    overflow-x: auto;
   }
 
-  .part-form-actions {
+  .admin-parts-actions {
     flex-direction: column;
   }
 
-  .save-part-btn,
-  .cancel-part-btn {
+  .admin-parts-edit-btn,
+  .admin-parts-delete-btn {
+    width: 100%;
+  }
+
+  .admin-parts-form-actions {
+    flex-direction: column;
+  }
+
+  .admin-parts-submit-btn,
+  .admin-parts-cancel-btn {
     width: 100%;
   }
 }

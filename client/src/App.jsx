@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
@@ -13,6 +13,36 @@ import Register from "./pages/Register";
 import AdminDashboard from "./pages/admindashboard";
 import AdminTroubleshooting from "./pages/AdminTroubleshooting";
 import AdminParts from "./pages/adminparts";
+
+// ========================================
+// PROTECTED ADMIN ROUTE
+// ========================================
+
+function ProtectedAdminRoute({ children }) {
+  const admin = localStorage.getItem("repairxAdmin");
+
+  if (!admin) {
+    return <Navigate to="/login" replace />;
+  }
+
+  try {
+    const adminData = JSON.parse(admin);
+
+    if (!adminData || adminData.role !== "admin") {
+      localStorage.removeItem("repairxAdmin");
+      return <Navigate to="/login" replace />;
+    }
+
+    return children;
+  } catch (error) {
+    localStorage.removeItem("repairxAdmin");
+    return <Navigate to="/login" replace />;
+  }
+}
+
+// ========================================
+// APP
+// ========================================
 
 function App() {
   return (
@@ -58,22 +88,34 @@ function App() {
 
 
         {/* =========================
-            ADMIN PAGES
+            PROTECTED ADMIN PAGES
         ========================= */}
 
         <Route
           path="/admin"
-          element={<AdminDashboard />}
+          element={
+            <ProtectedAdminRoute>
+              <AdminDashboard />
+            </ProtectedAdminRoute>
+          }
         />
 
         <Route
           path="/admin/troubleshooting"
-          element={<AdminTroubleshooting />}
+          element={
+            <ProtectedAdminRoute>
+              <AdminTroubleshooting />
+            </ProtectedAdminRoute>
+          }
         />
 
         <Route
           path="/admin/parts"
-          element={<AdminParts />}
+          element={
+            <ProtectedAdminRoute>
+              <AdminParts />
+            </ProtectedAdminRoute>
+          }
         />
 
       </Routes>
