@@ -18,7 +18,10 @@ const app = express();
 
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: [
+      "http://localhost:5173",
+      "https://repairx-client.onrender.com",
+    ],
   })
 );
 
@@ -68,6 +71,6 @@ const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
   console.log(
-    `RepairX server running on http://localhost:${PORT}`
+    `RepairX server running on port ${PORT}`
   );
 });
