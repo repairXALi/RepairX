@@ -20,7 +20,7 @@ function Login() {
 
     try {
       const response = await fetch(
-        "/api/admin/login",
+        "https://repairx-server.onrender.com/api/admin/login",
         {
           method: "POST",
 
@@ -29,13 +29,26 @@ function Login() {
           },
 
           body: JSON.stringify({
-            email,
+            email: email.trim(),
             password,
           }),
         }
       );
 
-      const result = await response.json();
+      // Get response safely
+      const text = await response.text();
+
+      let result = {};
+
+      try {
+        result = text ? JSON.parse(text) : {};
+      } catch (jsonError) {
+        console.error("Invalid JSON response:", text);
+
+        throw new Error(
+          "Server returned an invalid response."
+        );
+      }
 
       if (!response.ok) {
         throw new Error(
@@ -51,7 +64,7 @@ function Login() {
 
       setSuccess("Login successful!");
 
-      // Go to admin dashboard
+      // Go to Admin Dashboard
       setTimeout(() => {
         navigate("/admin");
       }, 500);
