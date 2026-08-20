@@ -10,9 +10,9 @@ import About from "./pages/About";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 
-import AdminDashboard from "./pages/AdminDashboard";
+import AdminDashboard from "./pages/admindashboard";
 import AdminTroubleshooting from "./pages/AdminTroubleshooting";
-import AdminParts from "./pages/AdminParts";
+import AdminParts from "./pages/adminparts";
 
 function App() {
   return (
