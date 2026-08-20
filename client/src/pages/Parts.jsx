@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { getParts } from "../data/api";
-import "./Parts.css";
+import "./parts.css";
 
 function Parts() {
   const [parts, setParts] = useState([]);
