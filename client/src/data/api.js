@@ -1,4 +1,4 @@
-const API_URL =  "https://repairx.onrender.com/api";
+const API_URL = "https://repairx-server.onrender.com/api";
 
 // ================================
 // Troubleshooting API
